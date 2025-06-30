@@ -1,12 +1,13 @@
 package day2;
 
-public class Employee extends Person {
+public class Employee extends Person implements Payable {
     // Attributes เพิ่มเติมเฉพาะของ Employee
     private String employeeId;
     private String position;
+    private double salary; // เพิ่มเงินเดือน
 
     // Constructor ของ Employee
-    public Employee(String firstName, String lastName, int age, String employeeId, String position) {
+    public Employee(String firstName, String lastName, int age, String employeeId, String position , double salary) {
         // คำสั่งแรกสุด! ต้องเรียก constructor ของคลาสแม่ (Person)
         // เพื่อตั้งค่า firstName, lastName, และ age
         super(firstName, lastName, age);
@@ -14,6 +15,11 @@ public class Employee extends Person {
         // จากนั้นค่อยตั้งค่า attributes ของ Employee เอง
         this.employeeId = employeeId;
         this.position = position;
+        this.salary = salary;
+    }
+
+    public double getSalary() {
+        return salary;
     }
 
     public String getEmployeeId() {
@@ -31,6 +37,14 @@ public class Employee extends Person {
         super.introduce(); // จะแสดงผล "Hello, my name is [ชื่อ] [นามสกุล]."
         // แล้วค่อยเพิ่มข้อมูลเฉพาะของ Employee เข้าไป
         System.out.println("I am a " + this.position + " with ID: " + this.employeeId);
+    }
+
+    @Override
+    public double calculatePay() {
+
+//        System.out.println(this.salary);
+        // สมมติว่าจ่ายเงินเดือนเต็มจำนวน
+        return this.salary;
     }
 
 }

@@ -1,66 +1,59 @@
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Scanner;
-import day2.Person;
-import day2.BankAccount;
-import day2.Employee;
-import day2.Manager;
+
+import day2.*;
+
+import java.util.List;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-//        // สร้าง Object (บ้านหลังแรก) จาก Class Person
-//        Person person1 = new Person("Tony", "Stark", 50);
+//        // สร้าง List ของ Person
+//        List<Person> people = new ArrayList<>();
 //
-//        // สร้าง Object (บ้านหลังที่สอง) จากพิมพ์เขียวเดียวกัน
-//        Person person2 = new Person("Peter", "Parker", 22);
+//        // เราสามารถเพิ่มได้ทั้ง Person, Employee, และ Manager!
+//        people.add(new Person("Terakan" , "Pumpoem" , 30));
+//        people.add(new Employee("Thananya" , "Sriwichain" , 35 , "E001" , "Event" , 20000.3));
+//        people.add(new Manager("Supap" ,"Praikaeo" , 50 , "M001" , "IT Manager", 2000000 , "Technology"));
 //
-//        // เรียกใช้พฤติกรรมของแต่ละ Object
-//        System.out.println("--- Person 1 ---");
-//        person1.introduce(); // แสดงผล: Hello, my name is Tony Stark.
+//        System.out.println("--- Demonstrating Polymorphism ---");
 //
-//        // เรียกใช้ Getter เพื่อดึงข้อมูล
-//        System.out.println("First name: " + person1.getFirstName()); // แสดงผล: First name: Tony
+//        for (Person person : people) {
 //
-//        System.out.println("\n--- Person 2 ---");
-//        person2.introduce(); // แสดงผล: Hello, my name is Peter Parker.
-//        System.out.println(person2.getFirstName() + "'s age is " + person2.getAge()); // แสดงผล: Peter's age is 22
-//
-//        // ลองใช้ Setter เพื่อเปลี่ยนค่า
-//        System.out.println("\nSpider-Man gets a new name...");
-//        person2.setLastName("Stark-Parker");
-//        person2.introduce(); // แสดงผล: Hello, my name is Peter Stark-Parker.
-//
-//        // เรียกใช้พฤติกรรมของแต่ละ Object
-//        System.out.println("---Person1---");
-//
-//        Scanner input = new Scanner(System.in);
-//        System.out.println("Enter First Name: ");
-//        String firstName = input.nextLine();
-//
-//        Scanner input2 = new Scanner(System.in);
-//        System.out.println("Enter Last Name: ");
-//        String lastName = input2.nextLine();
-//
-//        Scanner input3 = new Scanner(System.in);
-//        System.out.println("Enter Age: ");
-//        int age = input3.nextInt();
-//
-//        Person person3 = new Person(firstName ,lastName , age);
-//        person3.introduce();
-//        BankAccount bankAccount = new BankAccount("39485329" , "Evolazman" , 0);
-//        bankAccount.deposit(50000);
-//        bankAccount.withdraw(5500);
+//            person.introduce();// Java จะเลือกเวอร์ชันที่ถูกต้องของ introduce() ให้เอง
+//            System.out.println(person);
+//            System.out.println("--------------------");
+//        }
 
-//        Employee emp1 = new Employee("EMP1001" , "CEO of Botnoi" , "Terakan" , "Pujmpoem" , 22);
-//
-//        emp1.introduce();
-//
-//        System.out.println("EmpID : " + emp1.getEmployeeId());
-//
-//        System.out.println("Emp Position : " + emp1.getPosition());
+        List<Payable> payables = new ArrayList<>();
 
-        Manager manager1 = new Manager("Terakan" , "Pumpoem" , 22 , "EMP1001" , "Manager" , "IT");
+        payables.add(new Employee("Thananya" , "Sriwichain" , 35 , "E001" , "Event" , 20000.3));
 
-        manager1.introduce();
+        payables.add(new Manager("Supap" ,"Praikaeo" , 50 , "M001" , "IT Manager", 305000 , "Technology"));
+
+        payables.add(new Consultant("name" , 300 , 40));
+
+        double totalPayout = 0;
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+
+        System.out.println("--- Company Payout Report ---");
+
+        for (Payable entity : payables) {
+            double pay = entity.calculatePay();
+            totalPayout += pay;
+
+            if (entity instanceof Employee) {
+                Employee emp = (Employee) entity;
+                System.out.println("Paying Employee " + emp.getFirstName() + ": " + currencyFormatter.format(pay));
+            }else if (entity instanceof Consultant) {
+                Consultant con  = (Consultant) entity;
+                System.out.println("Paying Consultant " + con.getName() + ": " + currencyFormatter.format(pay));
+            }
+        }
+        System.out.println("---------------------------------");
+        System.out.println("Total Payout This Period: " + currencyFormatter.format(totalPayout));
+
     }
 
 
